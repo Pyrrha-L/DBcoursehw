@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>首页左侧导航</title>
+<link rel="stylesheet" type="text/css" href="/static/css/public.css" />
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/public.js"></script>
+<head></head>
+
+<body id="bg">
+	<!-- 左边节点 -->
+	<div class="container">
+
+		<div class="leftsidebar_box">
+			<a href="#" target="main"><div class="line">
+					<img src="/static/img/coin01.png" />&nbsp;&nbsp;首页
+				</div></a>
+			<dl class="system_log">
+				{% for permission in permissions %}
+					{% if permission.p == '2' %}
+					<dt>
+						<img class="coin11" src="/static/img/coin111.png" /><img class="coin22"
+							src="/static/img/coin222.png" /><a class="cks" href="/user/"
+							target="main">发表帖子</a><img class="icon5" src="/static/img/coin21.png" />
+					</dt>
+					{% endif %}
+				{% endfor %}
+			</dl>
+
+			<dl class="system_log">
+				{% for permission in permissions %}
+					{% if permission.p == '3' %}
+					<dt>
+						<img class="coin11" src="/static/img/coin111.png" /><img class="coin22"
+							src="/static/img/coin222.png" /><a class="cks" href="/user/"
+							target="main">删除帖子</a><img class="icon5" src="/static/img/coin21.png" />
+					</dt>
+					{% endif %}
+				{% endfor %}
+            </dl>
+            
+            <dl class="system_log">
+				{% for permission in permissions %}
+					{% if permission.p == '4' %}
+    				<dt>
+    					<img class="coin11" src="/static/img/coin111.png" /><img class="coin22"
+							src="/static/img/coin222.png" /><a class="cks" href="/user/"
+							target="main">版块删帖</a><img class="icon5" src="/static/img/coin21.png" />
+					</dt>
+					{% endif %}
+				{% endfor %}
+			</dl>
+			
+			<dl class="system_log">
+				{% for permission in permissions %}
+					{% if permission.p == '5' %}
+					<dt>
+						<img class="coin11" src="/static/img/coin111.png" /><img class="coin22"
+							src="/static/img/coin222.png" /><a class="cks" href="/user/"
+							target="main">用户管理</a><img class="icon5" src="/static/img/coin21.png" />
+					</dt>
+					<dd>
+						<img class="coin11" src="/static/img/coin111.png" /><img class="coin22"
+							src="/static/img/coin222.png" /><a class="cks" href="/user/"
+							target="main">用户禁言</a><img class="icon5" src="/static/img/coin21.png" />
+					</dd>
+					<dd>
+						<img class="coin11" src="/static/img/coin111.png" /><img class="coin22"
+							src="/static/img/coin222.png" /><a class="cks" href="/user/"
+							target="main">用户封号</a><img class="icon5" src="/static/img/coin21.png" />
+					</dd>
+					<dd>
+						<img class="coin11" src="/static/img/coin111.png" /><img class="coin22"
+							src="/static/img/coin222.png" /><a class="cks" href="/user/"
+							target="main">用户解禁</a><img class="icon5" src="/static/img/coin21.png" />
+					</dd>
+					<dd>
+						<img class="coin11" src="/static/img/coin111.png" /><img class="coin22"
+							src="/static/img/coin222.png" /><a class="cks" href="/user/"
+							target="main">用户解封</a><img class="icon5" src="/static/img/coin21.png" />
+					</dd>
+					{% endif %}
+				{% endfor %}
+			</dl>
+			
+			<dl class="system_log">
+				<dt>
+					<img class="coin11" src="/static/img/coin111.png" /><img class="coin22"
+						src="/static/img/coin222.png" /><a href="/user/"
+						target="main" class="cks">修改密码</a><img class="icon5"
+						src="/static/img/coin21.png" />
+				</dt>
+				<dd>
+					<img class="coin11" src="/static/img/coin111.png" />
+					<img class="coin22" src="/static/img/coin222.png" />
+					<a href="/user/logout/" class="cks">退出</a>
+					<img class="icon5" src="/static/img/coin21.png" />
+				</dd>
+			</dl>
+
+		</div>
+
+	</div>
+</body>
+</html>
