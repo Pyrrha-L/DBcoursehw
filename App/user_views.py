@@ -74,6 +74,8 @@ def create_db():
             fb = row["category"]
             username = row["screenname"]
             content = row["text"]
+            pos = content.find('http')
+            content = content[:pos]
             
             if(fb not in fblist):
                 fblist.append(fb)
@@ -283,55 +285,166 @@ def forumblock_list():
         fbs = paginate.items
         
         # 根据版主id获取版主名
-        for fb in fbs:
-            print(type(fb))
+        # for fb in fbs:
+            #print(type(fb))
             #user = User_id_name_pwd.query.filter_by(u_id=fb.fb_masterid).first()
             #fb['fb_mastername']="admin"
             
         # 返回获取到的版块信息给前端页面
         return render_template('fblist.html', fbs=fbs, paginate=paginate)
-    
+
+@user_blueprint.route('/postlist/', methods=['GET', 'POST'])
+@is_login
 def post_list():
     """
     显示帖子列表
     """
-    
+    if request.method == 'GET':
+        fb_id = request.args.get('fb_id')
+        # 查询第几页的数据
+        #page = int(request.args.get('page',1))
+        # 每页的条数是多少,默认为5条
+        #page_num = int(request.args.get('page_num',5))
+        # 查询当前第几个的多少条数据
+        #paginate = Post_info.query.join(User_id_name_pwd).filter(Post_info.fb_id == fb_id).paginate(page,page_num)
+        posts = Post_info.query.join(User_id_name_pwd).filter(Post_info.fb_id == fb_id).all()
+        #posts = paginate.items
+        #posts = Post_info.query.join(User_id_name_pwd).filter(Post_info.fb_id == fb_id).all()
+        #return render_template('postlist.html', fb_id=fb_id, posts=posts, paginate=paginate)
+        return render_template('postlist.html', fb_id=fb_id, posts=posts)
+
+@user_blueprint.route('/messagelist/', methods=['GET', 'POST'])
+@is_login
 def message_list():
     """
     显示帖子对应的留言列表
     """
     
+    return render_template('messagelist.html')
+
+@user_blueprint.route('/userlist/', methods=['GET', 'POST'])
+@is_login
+def user_list():
+    """
+    显示用户列表
+    """
+    
+    return render_template('userlist.html')
+
+@user_blueprint.route('/addpost/', methods=['GET', 'POST'])
+@is_login
 def add_post():
     """
     新增帖子
     """
+    
+    return render_template('addpost.html')
 
+
+@user_blueprint.route('/changefbmaster/', methods=['GET', 'POST'])
+@is_login
+def change_fb_master():
+    """
+    修改版主
+    """
+    
+    return render_template('changefbmaster.html')
+
+@user_blueprint.route('/addpost/', methods=['GET', 'POST'])
+@is_login
 def del_post():
     """
     删除帖子
     """
-    
+    return render_template('delpost.html')
+
+@user_blueprint.route('/addmessage/', methods=['GET', 'POST'])
+@is_login    
 def add_message():
     """
     新增留言
     """
     
+    return render_template('addmessage.html')
+
+@user_blueprint.route('/editmessage/', methods=['GET', 'POST'])
+@is_login
 def edit_message():
     """
     修改留言
     """
+    return render_template('editmessage.html')
 
+@user_blueprint.route('/delmessage/', methods=['GET', 'POST'])
+@is_login
 def del_message():
     """
     删除留言
     """
+    return render_template('delmessage.html')
 
-def search_post():
+@user_blueprint.route('/searchpostbytitle/', methods=['GET', 'POST'])
+@is_login
+def search_post_by_title():
     """
     搜索帖子
     """
     
+    return render_template('searchpostbytitle.html')
+
+@user_blueprint.route('/edituser/', methods=['GET', 'POST'])
+@is_login
+def edit_user():
+    """
+    修改用户权限(封号，禁言)
+    """
     
+    return render_template('edituser.html')
+
+@user_blueprint.route('/changepwd/', methods=['GET', 'POST'])
+@is_login
+def change_password():
+    """修改用户密码"""
+    if request.method == 'GET':
+        username = session.get('username')
+        user = User.query.filter_by(username=username).first()
+        return render_template('changepwd.html', user=user)
+
+    if request.method == 'POST':
+        username = session.get('username')
+        pwd1 = request.form.get('pwd1')
+        pwd2 = request.form.get('pwd2')
+        pwd3 = request.form.get('pwd3')
+
+        pwd = User.query.filter(User.password == pwd1, User.username == username).first()
+        if not pwd:
+            msg = '请输入正确的旧密码'
+            username = session.get('username')
+            user = User.query.filter_by(username=username).first()
+            return render_template('changepwd.html', msg=msg, user=user)
+        else:
+            if not all([pwd2, pwd3]):
+                msg = '密码不能为空'
+                username = session.get('username')
+                user = User.query.filter_by(username=username).first()
+                return render_template('changepwd.html', msg=msg, user=user)
+            if pwd2 != pwd3:
+                msg = '两次密码不一致,请重新输入'
+                username = session.get('username')
+                user = User.query.filter_by(username=username).first()
+                return render_template('changepwd.html', msg=msg, user=user)
+            pwd.password = pwd2
+            db.session.commit()
+            return redirect(url_for('user.change_pass_sucess'))
+
+
+@user_blueprint.route('/changepwdsu/', methods=['GET'])
+@is_login
+def change_pass_sucess():
+    """修改密码成功后"""
+    if request.method == 'GET':
+        return render_template('changepwdsu.html')
+
 
 '''
 @user_blueprint.route('/grade/', methods=['GET', 'POST'])
