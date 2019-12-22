@@ -37,7 +37,7 @@
             <tr>
                 <td>{{message.m_id }}</td>
                 <td>{{message.m_content }}</td>
-                <td>{{message.m_time}}</td>
+                <td>{{message.m_time.strftime("%Y-%m-%d %H:%M")}}</td>
                 <td>
                     <a href="/user/delmessage/?m_id={{message.m_id }}">删除</a> 
                 </td>

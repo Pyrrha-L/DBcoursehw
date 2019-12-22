@@ -39,7 +39,11 @@
             <tr>
                 <td>{{user.u_id }}</td>
                 <td>{{user.u_name }}</td>
-                <td>{{user.u_info[0].u_reg_time}}</td>
+
+
+                <td>{{user.u_info[0].u_reg_time.strftime("%Y-%m-%d")}}</td>
+
+
                 <td>{{user.u_XP[0].u_XP}}</td>
                 {% if user.u_info[0].u_state == 0 %}
                 <td>正常</td>

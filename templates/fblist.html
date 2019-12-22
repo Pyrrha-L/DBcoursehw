@@ -39,7 +39,7 @@
                 <td>{{fb.fb_id }}</td>
                 <td>{{fb.fb_theme }}</td>
                 <td>{{fb.fb_mastername }}</td>
-                <td>{{fb.fb_updatetime}}</td>
+                <td>{{fb.fb_updatetime.strftime("%Y-%m-%d %H:%M")}}</td>
                 <td>
                     <a href="/user/postlist/?fb_id={{fb.fb_id }}">查看</a>|
                     <a href="/user/addpost/?fb_id={{fb.fb_id }}">发表帖子</a>
