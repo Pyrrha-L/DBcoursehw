@@ -498,8 +498,9 @@ def add_message():
         p.save()
         
         tmpuser.u_pum_info.append(p)
+        tmpuser.u_XP[0].u_XP += 10
         tmpuser.save()
-        
+
         pumpmid = PUM_pid_mid(pid=pid, mid=p.m_id)
         pumpmid.save()
         
