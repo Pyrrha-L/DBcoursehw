@@ -41,7 +41,11 @@
                 <td>{{post.p_ptime}}</td>
                 <td>{{post.user_id_name_pwd.u_name}}</td>
                 <td>
-                    <a href="/user/delpost/?p_id={{post.p_id }}&fb_id={{fb_id}}">删除</a> |
+                    {% if permissions == 4 %} {# 如果是管理员 #}
+                        <a href="/user/delpost/?p_id={{post.p_id }}&fb_id={{fb_id}}">删除</a> |
+                    {% elif permissions == 3 and post.fb_id == fbid%} {# 如果是版主 #}
+                        <a href="/user/delpost/?p_id={{post.p_id }}&fb_id={{fb_id}}">删除</a> |
+                    {% endif%}
                     <a href="/user/messagelist/?p_id={{post.p_id}}&fb_id={{fb_id}}">查看</a> 
                 </td>
             </tr>

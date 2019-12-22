@@ -18,8 +18,11 @@
 				</div></a>
 			<dl class="system_log">
 					<dt>
+						{% if permissions == 4 %}
+{#                            是管理员才显示#}
 						<img class="coin11" src="/static/img/coin03.png" /><a class="cks" href="/user/userlist/"
 							target="main">用户列表</a>
+						{% endif%}
 					</dt>
 			</dl>
 
@@ -27,6 +30,13 @@
 					<dt>
 						<img class="coin11" src="/static/img/coin03.png" /><a class="cks" href="/user/postsearchall/"
 							target="main">搜索帖子</a>
+					</dt>
+            </dl>
+
+            <dl class="system_log">
+					<dt>
+						<img class="coin11" src="/static/img/coin03.png" /><a class="cks" href="/user/usersearchall/"
+							target="main">搜索用户</a>
 					</dt>
             </dl>
             

@@ -49,16 +49,19 @@
                 <td>封号中</td>
                 {% endif%}
                 <td>
-                    <a href="/user/personallist/?u_id={{user.u_id}}" target="main">查看发言</a>|
-                    {% if user.u_info[0].u_state == 0 %}
-                    <a href="/user/changestate1/?u_id={{user.u_id}}" target="main">禁言</a>|
-                    <a href="/user/changestate2/?u_id={{user.u_id}}" target="main">封号</a> 
-                    {% elif user.u_info[0].u_state == 1 %}
-                    <a href="/user/changestate3/?u_id={{user.u_id}}" target="main">解禁</a>|
-                    <a href="/user/changestate2/?u_id={{user.u_id}}" target="main">封号</a>
-                    {% elif user.u_info[0].u_state == 2 %}
-                    <a href="/user/changestate1/?u_id={{user.u_id}}" target="main">禁言</a>|
-                    <a href="/user/changestate4/?u_id={{user.u_id}}" target="main">解封</a>
+                    <a href="/user/personallist/?u_id={{user.u_id}}" target="main">查看发言</a>
+                    {% if permissions == 4 %} {# 如果是管理员 #}
+                        |
+                        {% if user.u_info[0].u_state == 0 %}
+                            <a href="/user/changestate1/?u_id={{user.u_id}}" target="main">禁言</a>|
+                            <a href="/user/changestate2/?u_id={{user.u_id}}" target="main">封号</a>
+                        {% elif user.u_info[0].u_state == 1 %}
+                            <a href="/user/changestate3/?u_id={{user.u_id}}" target="main">解禁</a>|
+                            <a href="/user/changestate2/?u_id={{user.u_id}}" target="main">封号</a>
+                        {% elif user.u_info[0].u_state == 2 %}
+                            <a href="/user/changestate1/?u_id={{user.u_id}}" target="main">禁言</a>|
+                            <a href="/user/changestate4/?u_id={{user.u_id}}" target="main">解封</a>
+                        {% endif%}
                     {% endif%}
                 </td>
             </tr>

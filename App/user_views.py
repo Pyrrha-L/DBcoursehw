@@ -48,7 +48,7 @@ def create_db():
     db.create_all()
     
     def init_data():
-        datafile = 'F:\\code\\DBcourse\\finalhw\\myhw\\App\\dataset.csv'
+        datafile = './App/dataset.csv'
         
         csv_data = pd.read_csv(datafile,encoding = 'utf-8',error_bad_lines=False)
         print(csv_data.shape)
@@ -181,16 +181,16 @@ def left():
         #print(user)
         grant = User_info.query.join(User_id_name_pwd).filter_by(u_name=user).first().u_grant
         #print(grant)
-        if(grant==1):
-            permissions = [{'p':'1'}]
-        elif(grant==2):
-            permissions = [{'p':'1'},{'p':'2'},{'p':'3'}]
-        elif(grant==3):
-            permissions = [{'p':'1'},{'p':'2'},{'p':'3'},{'p':'4'}]
-        elif(grant==4):
-            permissions = [{'p':'1'},{'p':'2'},{'p':'3'},{'p':'4'},{'p':'5'}]
+        # if(grant==1):
+        #     permissions = [{'p':'1'}]
+        # elif(grant==2):
+        #     permissions = [{'p':'1'},{'p':'2'},{'p':'3'}]
+        # elif(grant==3):
+        #     permissions = [{'p':'1'},{'p':'2'},{'p':'3'},{'p':'4'}]
+        # elif(grant==4):
+        #     permissions = [{'p':'1'},{'p':'2'},{'p':'3'},{'p':'4'},{'p':'5'}]
         #print(permissions)
-        return render_template('left.html', permissions=permissions)
+        return render_template('left.html', permissions=grant)
 
 
 @user_blueprint.route('/register/', methods=['GET', 'POST'])
@@ -303,8 +303,12 @@ def forumblock_list():
         # 获取版块的具体数据
         fbs = paginate.items
 
+        user = session.get('username')
+        # 获取用户的权限
+        grant = User_info.query.join(User_id_name_pwd).filter_by(u_name=user).first().u_grant
+
         # 返回获取到的版块信息给前端页面
-        return render_template('fblist.html', fbs=fbs, paginate=paginate)
+        return render_template('fblist.html', fbs=fbs, paginate=paginate,permissions = grant)
 
 @user_blueprint.route('/postlist/', methods=['GET', 'POST'])
 @is_login
@@ -315,8 +319,16 @@ def post_list():
     if request.method == 'GET':
         fb_id = request.args.get('fb_id')
         posts = Post_info.query.filter(Post_info.fb_id == fb_id).all()
-        print(len(posts))
-        return render_template('postlist.html', posts=posts )
+
+        user = session.get('username')
+        # 获取用户的权限
+        grant = User_info.query.join(User_id_name_pwd).filter_by(u_name=user).first().u_grant
+
+        # 如果用户是版主，则获得板块的编号，否则就是-1
+        fbid = -1  # 用户不是版主，编号是-1
+        if grant == 3:  # 用户是版主
+            fbid = FB_info.query.filter(FB_info.fb_masterid == user).first()
+        return render_template('postlist.html', posts=posts, permissions=grant, fbid=fbid)
 
 @user_blueprint.route('/messagelist/', methods=['GET', 'POST'])
 @is_login
@@ -344,7 +356,12 @@ def user_list():
     """
     if request.method == 'GET':
         users = User_id_name_pwd.query.all()
-        return render_template('userlist.html',users=users)
+
+        user = session.get('username')
+        # 获取用户的权限
+        grant = User_info.query.join(User_id_name_pwd).filter_by(u_name=user).first().u_grant
+
+        return render_template('userlist.html',users=users,permissions =grant)
 
 @user_blueprint.route('/addpost/', methods=['GET', 'POST'])
 @is_login
@@ -369,18 +386,18 @@ def add_post():
         p = Post_info(uid=tmpuser.u_id,fbid=fb_id,title=title)
         p.p_id = db.session.query(func.max(Post_info.p_id)).scalar()+1
         
-        print(p.p_id)
+        # print(p.p_id)
         
         puminfo=PUM_info(uid=tmpuser.u_id,content=content)
         puminfo.m_id = db.session.query(func.max(PUM_info.m_id)).scalar()+1
         puminfo.save()
         tmpuser.u_pum_info.append(puminfo)
-        print(puminfo.m_id)
+        # print(puminfo.m_id)
         
         pumpmid = PUM_pid_mid(pid=p.p_id,mid=puminfo.m_id)
         pumpmid.save()
-        print(PUM_pid_mid.query.filter_by(m_id=puminfo.m_id).first().p_id)
-        print(pumpmid.m_id)
+        # print(PUM_pid_mid.query.filter_by(m_id=puminfo.m_id).first().p_id)
+        # print(pumpmid.m_id)
         p.p_message.append(pumpmid)
         
         pir = Post_id_restime(pid=p.p_id)
@@ -422,13 +439,26 @@ def change_fb_master():
         if not user:
             msg = '*该用户不存在'
             return render_template('changefbmaster.html', msg=msg)
-       
+
+        userinfo = User_info.query.filter(User_info.u_id == user.u_id).first()
+        if userinfo.u_grade == 3:
+            msg = '*该用户已经是版主'
+            return render_template('changefbmaster.html', msg=msg)
+
         fb = FB_info.query.filter(FB_info.fb_id == fbid).first()
-        fb.fb_masterid=user.u_id
-        fb.fb_mastername=user.u_name
-        
+        premaster = User_info.query.filter(User_info.u_id == fb.fb_masterid).first()  # 原来的版主
+        # 修改旧版主的权限
+        if premaster:
+            premaster.u_grant = 2
+            premaster.save()
+        # 修改板块表的版主编号
+        fb.fb_masterid = user.u_id
+        fb.fb_mastername = user.u_name
         fb.save()
 
+        # 修改新版主权限
+        userinfo.u_grant = 3
+        userinfo.save()
         return redirect(url_for('user.forumblock_list'))
 
 @user_blueprint.route('/delpost/', methods=['GET', 'POST'])
@@ -732,14 +762,40 @@ def personal_list():
 
 @user_blueprint.route('/postsearchall/', methods=['GET', 'POST'])
 @is_login
-def postsearchall():
+def postsearchall():  # 按照标题搜索帖子
     if request.method == 'GET':
         return render_template('searchpostbytitle.html')
-    
+
     if request.method == 'POST':
         keywords = request.form.get('keywords')
-        posts = Post_info.query.filter(Post_info.p_title.like('%'+keywords+'%')).all()
-        return render_template('postlist.html', posts=posts)
+        posts = Post_info.query.filter(Post_info.p_title.like('%' + keywords + '%')).all()
+
+        user = session.get('username')
+        # 获取用户的权限
+        grant = User_info.query.join(User_id_name_pwd).filter_by(u_name=user).first().u_grant
+
+        # 如果用户是版主，则获得板块的编号，否则就是-1
+        fbid = -1  # 用户不是版主，编号是-1
+        if grant == 3:  # 用户是版主
+            fbid = FB_info.query.filter(FB_info.fb_mastername == user).first().fb_id
+        # print('fffffffffffffffffff ' + str(fbid))
+        return render_template('postlist.html', posts=posts, permissions=grant, fbid=fbid)
+
+
+@user_blueprint.route('/usersearchall/', methods=['GET', 'POST'])
+@is_login
+def usersearchall():
+    if request.method == 'GET':
+        return render_template('searchuserbyname.html')
+
+    if request.method == 'POST':
+        keywords = request.form.get('keywords')
+        users = User_id_name_pwd.query.filter(User_id_name_pwd.u_name.like('%' + keywords + '%')).all()
+
+        user = session.get('username')
+        # 获取用户的权限
+        grant = User_info.query.join(User_id_name_pwd).filter_by(u_name=user).first().u_grant
+        return render_template('userlist.html', users=users,permissions=grant)
 
 """
 @user_blueprint.route('/addgrade/', methods=['GET', 'POST'])

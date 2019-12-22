@@ -42,8 +42,10 @@
                 <td>{{fb.fb_updatetime}}</td>
                 <td>
                     <a href="/user/postlist/?fb_id={{fb.fb_id }}">查看</a>|
-                    <a href="/user/addpost/?fb_id={{fb.fb_id }}">发表帖子</a>|
-                    <a href="/user/changefbmaster/?fb_id={{fb.fb_id }}">版主管理</a> 
+                    <a href="/user/addpost/?fb_id={{fb.fb_id }}">发表帖子</a>
+                    {% if permissions == 4 %} {# 如果是管理员 #}
+                        |<a href="/user/changefbmaster/?fb_id={{fb.fb_id }}">版主管理</a>
+                    {% endif%}
                 </td>
             </tr>
             {% endfor %}
