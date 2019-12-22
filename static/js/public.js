@@ -42,7 +42,7 @@ $(function(){
 	$(".cks").click(function(){
 		// 先处理掉所有存在的节点,再判断是否存在
 		$(".icon5").hide();
-		$('.coin11').hide();
+		//$('.coin11').hide();
 		$('.coin22').show();
 		$(this).parent().find('.coin11').show();
 		$(this).parent().find('.coin22').hide();

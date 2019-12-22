@@ -38,10 +38,12 @@
             <tr>
                 <td>{{fb.fb_id }}</td>
                 <td>{{fb.fb_theme }}</td>
-                <td>无</td>
+                <td>{{fb.fb_mastername }}</td>
                 <td>{{fb.fb_updatetime}}</td>
                 <td>
-                    <a href="/user/postlist/?fb_id={{fb.fb_id }}">查看</a> 
+                    <a href="/user/postlist/?fb_id={{fb.fb_id }}">查看</a>|
+                    <a href="/user/addpost/?fb_id={{fb.fb_id }}">发表帖子</a>|
+                    <a href="/user/changefbmaster/?fb_id={{fb.fb_id }}">版主管理</a> 
                 </td>
             </tr>
             {% endfor %}

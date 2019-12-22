@@ -1,54 +1,191 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>注册</title>
-<link rel="stylesheet" type="text/css" href="/static/css/public.css" />
-<link rel="stylesheet" type="text/css" href="/static/css/page.css" />
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
-<script type="text/javascript" src="/static/js/public.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Home</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+
+<link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
+
+	<link rel="stylesheet" href="/static/assets/css/bootstrap/bootstrap.css">
+<link rel="stylesheet" href="/static/assets/fonts/ionicons/css/ionicons.min.css">
+<link rel="stylesheet" href="/static/assets/fonts/law-icons/font/flaticon.css">
+
+<link rel="stylesheet" href="/static/assets/fonts/fontawesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/static/assets/css/slick.css">
+<link rel="stylesheet" href="/static/assets/css/slick-theme.css">
+
+<link rel="stylesheet" href="/static/assets/css/helpers.css">
+<link rel="stylesheet" href="/static/assets/css/style.css">
+<link rel="stylesheet" href="/static/assets/css/landing-2.css">
 </head>
-<body>
-	<form action="" method="post">
-	<!-- 登录body -->
-	<div class="logDiv">
-		<img class="logBanner" src="/static/img/logBanner.png" />
-		<div class="logGet">
-			<!-- 头部提示信息 -->
-			<div class="logD logDtip">
-				<p class="p1">注册</p>
+<body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
+
+<nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
+  <div class="container">
+
+	<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">
+	  <span><i class="ion-navicon"></i></span>
+	</button>
+	<div class="collapse navbar-collapse" id="probootstrap-navbar">
+	  <ul class="navbar-nav ml-auto">
+
+
+{#		<li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0"><a class="nav-link" href="" target="_blank"><span class="pb_rounded-4 px-4">Get Started</span></a></li>#}
+	  </ul>
+	</div>
+  </div>
+</nav>
+<!-- END nav -->
+
+
+<form action="" method="post">
+<section class="pb_cover_v3 overflow-hidden cover-bg-indigo cover-bg-opacity text-left pb_gradient_v1 pb_slant-light" id="section-home">
+  <div class="container">
+	<div class="row align-items-center justify-content-center">
+	  <div class="col-md-6">
+		<h2 class="heading mb-3">Database<br>论坛</h2>
+		<div class="sub-heading">
+		  <p class="mb-4">由中国人民大学信息学院制作. 查看源码请点击 <a href="https://github.com/Pyrrha-L/DBcoursehw" target="_blank">此处</a>.</p>
+            <p class="mb-5"><a class="btn btn-success btn-lg pb_btn-pill smoothscroll" href="https://github.com/Pyrrha-L/DBcoursehw"><span class="pb_font-14 text-uppercase pb_letter-spacing-1">查看源码</span></a></p>
+		</div>
+	  </div>
+	  <div class="col-md-1">
+	  </div>
+	  <div class="col-md-5 relative align-self-center">
+
+		<form action="#" class="bg-white rounded pb_form_v1">
+		  <h2 class="mb-4 mt-0 text-center">免费注册</h2>
+<!--			<div class="lgD">-->
+<!--				<img class="img1" src="/static/img/logName.png" />-->
+<!--				<input type="text" placeholder="输入用户名" name="username" />-->
+<!--			</div>-->
+<!--			<div class="lgD">-->
+<!--				<img class="img1" src="/static/img/logPwd.png" />-->
+<!--				<input type="password" placeholder="输入用户密码" name="pwd1" />-->
+<!--			</div>-->
+<!--			<div class="lgD">-->
+<!--				<img class="img1" src="/static/img/logPwd.png" />-->
+<!--				<input type="password" placeholder="输入用户密码" name="pwd2" />-->
+<!--			</div>-->
+		  <div class="form-group">
+			<input type="text" class="form-control pb_height-50 reverse" placeholder="输入用户名" name="username">
+
+		  </div>
+		  <div class="form-group">
+			<input type="password" class="form-control pb_height-50 reverse" placeholder="输入密码" name="pwd1">
+		  </div>
+
+			<div class="form-group">
+			<input type="password" class="form-control pb_height-50 reverse" placeholder="确认密码" name="pwd2">
+		  </div>
+
+          <div class="logD logDtip">
+
 				<span style="color: red">{{msg}}</span>
 			</div>
-			<!-- 输入框 -->
-			<div class="lgD">
-				<img class="img1" src="/static/img/logName.png" />
-				<input type="text" placeholder="输入用户名" name="username" />
-			</div>
-			<div class="lgD">
-				<img class="img1" src="/static/img/logPwd.png" />
-				<input type="password" placeholder="输入用户密码" name="pwd1" />
-			</div>
-			<div class="lgD">
-				<img class="img1" src="/static/img/logPwd.png" />
-				<input type="password" placeholder="输入用户密码" name="pwd2" />
-			</div>
-			<div class="logC">
-				<a href="#" target="_self">
-					<button>
-						<input type="submit" value="注 &nbsp;&nbsp;册" style="background: none;border: none;color: white">
-					</button>
-				</a>
-			</div>
-		</div>
-	</div>
-	</form>
-	<!-- 登录body  end -->
+{#		  <div class="form-group">#}
+{#			<input type="text" class="form-control pb_height-50 reverse" placeholder="Email">#}
+{#		  </div>#}
+{#		  <div class="form-group">#}
+{#			<div class="pb_select-wrap">#}
+{#			  <select class="form-control pb_height-50 reverse">#}
+{#				<option value="" selected>Type</option>#}
+{#				<option value="">Basic</option>#}
+{#				<option value="">Business</option>#}
+{#				<option value="">Free</option>#}
+{#			  </select>#}
+{#			</div>#}
+{#		  </div>#}
+		  <div class="form-group">
+			<input type="submit" class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue" value="立刻注册" placeholder={{msg}}>
+		  </div>
+		</form>
 
-	<!-- 登录页面底部 -->
-	<div class="logFoot">
-		<p class="p1">2020</p>
+	  </div>
 	</div>
-	<!-- 登录页面底部end -->
-   
+  </div>
+</section>
+<!-- END section -->
+
+<!-- loader -->
+<div id="pb_loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#1d82ff"/></svg></div>
+
+
+
+<script src="/static/assets/js/jquery.min.js"></script>
+
+<script src="/static/assets/js/popper.min.js"></script>
+<script src="/static/assets/js/bootstrap.min.js"></script>
+<script src="/static/assets/js/slick.min.js"></script>
+<script src="/static/assets/js/jquery.mb.YTPlayer.min.js"></script>
+
+<script src="/static/assets/js/jquery.waypoints.min.js"></script>
+<script src="/static/assets/js/jquery.easing.1.3.js"></script>
+
+<script src="/static/assets/js/main.js"></script>
+
 </body>
-</html>
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+<!--<title>注册</title>-->
+<!--<link rel="stylesheet" type="text/css" href="/static/css/public.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="/static/css/page.css" />-->
+<!--<script type="text/javascript" src="/static/js/jquery.min.js"></script>-->
+<!--<script type="text/javascript" src="/static/js/public.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--	<form action="" method="post">-->
+<!--	&lt;!&ndash; 登录body &ndash;&gt;-->
+<!--	<div class="logDiv">-->
+<!--		<img class="logBanner" src="/static/img/logBanner2.png" />-->
+<!--		<div class="logGet">-->
+<!--			&lt;!&ndash; 头部提示信息 &ndash;&gt;-->
+<!--			<div class="logD logDtip">-->
+<!--				<p class="p1">注册</p>-->
+<!--				<span style="color: red">{{msg}}</span>-->
+<!--			</div>-->
+<!--			&lt;!&ndash; 输入框 &ndash;&gt;-->
+<!--			<div class="lgD">-->
+<!--				<img class="img1" src="/static/img/logName.png" />-->
+<!--				<input type="text" placeholder="输入用户名" name="username" />-->
+<!--			</div>-->
+<!--			<div class="lgD">-->
+<!--				<img class="img1" src="/static/img/logPwd.png" />-->
+<!--				<input type="password" placeholder="输入用户密码" name="pwd1" />-->
+<!--			</div>-->
+<!--			<div class="lgD">-->
+<!--				<img class="img1" src="/static/img/logPwd.png" />-->
+<!--				<input type="password" placeholder="输入用户密码" name="pwd2" />-->
+<!--			</div>-->
+<!--			<div class="logC">-->
+<!--				<a href="#" target="_self">-->
+<!--					<button>-->
+<!--						<input type="submit" value="注 &nbsp;&nbsp;册" style="background: none;border: none;color: white">-->
+<!--					</button>-->
+<!--				</a>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--	</form>-->
+<!--	&lt;!&ndash; 登录body  end &ndash;&gt;-->
+
+<!--	&lt;!&ndash; 登录页面底部 &ndash;&gt;-->
+<!--	<div class="logFoot">-->
+<!--		<p class="p1">2020</p>-->
+<!--	</div>-->
+<!--	&lt;!&ndash; 登录页面底部end &ndash;&gt;-->
+<!--   -->
+<!--</body>-->
+<!--</html>-->

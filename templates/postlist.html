@@ -39,10 +39,10 @@
                 <td>{{post.p_id }}</td>
                 <td>{{post.p_title }}</td>
                 <td>{{post.p_ptime}}</td>
-                <td>{{post.u_name}}</td>
+                <td>{{post.user_id_name_pwd.u_name}}</td>
                 <td>
-                    <a href="/user/">查看</a>
-                    <a href="/user/">删除</a> 
+                    <a href="/user/delpost/?p_id={{post.p_id }}&fb_id={{fb_id}}">删除</a> |
+                    <a href="/user/messagelist/?p_id={{post.p_id}}&fb_id={{fb_id}}">查看</a> 
                 </td>
             </tr>
             {% endfor %}

@@ -71,7 +71,7 @@ class Post_id_restime(db.Model): #respond time
     def updatetime(self):
         self.p_restime = datetime.now()
         
-    def save(delf):
+    def save(self):
         db.session.add(self)
         db.session.commit()
         
@@ -85,8 +85,8 @@ class Post_info(db.Model):
     p_ptime = db.Column(db.DateTime, default=datetime.now)
     p_title = db.Column(db.String(350))
     
-    p_restime = db.relationship('Post_id_restime',backref= 'post_info')
-    p_message = db.relationship('PUM_pid_mid',backref= 'post_info')
+    p_restime = db.relationship('Post_id_restime',backref= 'post_info',cascade="all, delete-orphan", lazy="joined")
+    p_message = db.relationship('PUM_pid_mid',backref= 'post_info', cascade="all, delete-orphan", lazy="joined")
     
     __tablename__ = 'post_info'
     
@@ -104,8 +104,8 @@ class PUM_pid_mid(db.Model):
     帖子id-留言id
     """
     
-    p_id = db.Column(db.Integer, db.ForeignKey('post_info.p_id')) #autoincrement=True, primary_key=True
-    m_id = db.Column(db.Integer, db.ForeignKey('pum_info.m_id'), primary_key=True)
+    p_id = db.Column(db.Integer, db.ForeignKey('post_info.p_id',ondelete='CASCADE')) #autoincrement=True, primary_key=True
+    m_id = db.Column(db.Integer, db.ForeignKey('pum_info.m_id',ondelete='CASCADE'), primary_key=True)
     
     __tablename__ = 'pum_pid_mid'
     
@@ -127,7 +127,7 @@ class PUM_info(db.Model):
     m_content = db.Column(db.String(350))
     m_time = db.Column(db.DateTime, default=datetime.now)
     
-    pum_pid = db.relationship('PUM_pid_mid',backref= 'pum_info')
+    pum_pid = db.relationship('PUM_pid_mid',backref= 'pum_info', cascade="all, delete-orphan", lazy="joined")
     
     __tablename__ = 'pum_info'
     
@@ -146,6 +146,7 @@ class FB_info(db.Model):
     fb_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     fb_theme = db.Column(db.String(30))
     fb_masterid = db.Column(db.Integer,nullable=True,default=0)
+    fb_mastername = db.Column(db.String(20),default='None')
     fb_updatetime = db.Column(db.DateTime, default=datetime.now)
     
     fb_post_info = db.relationship('Post_info',backref= 'fb_info')
