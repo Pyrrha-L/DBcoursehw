@@ -798,6 +798,7 @@ def usersearchall():
         grant = User_info.query.join(User_id_name_pwd).filter_by(u_name=user).first().u_grant
         return render_template('userlist.html', users=users,permissions=grant)
 
+
 """
 @user_blueprint.route('/addgrade/', methods=['GET', 'POST'])
 @is_login
