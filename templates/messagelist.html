@@ -41,7 +41,9 @@
                 <td>{{message.m_time.strftime("%Y-%m-%d %H:%M")}}</td>
                 <td>{{message.user_id_name_pwd.u_name}}</td>
                 <td>
-                    <a href="/user/delmessage/?m_id={{message.m_id }}&fb_id={{fb_id}}">删除</a>
+                    {% if permissions == 1 %} {# 如果有权限删除 #}
+                        <a href="/user/delmessage/?m_id={{message.m_id }}&fb_id={{fb_id}}">删除</a>
+                    {% endif%}
                 </td>
             </tr>
             {% endfor %}

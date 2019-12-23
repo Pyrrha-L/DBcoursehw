@@ -180,16 +180,6 @@ def left():
         # 获取用户的权限
         #print(user)
         grant = User_info.query.join(User_id_name_pwd).filter_by(u_name=user).first().u_grant
-        #print(grant)
-        # if(grant==1):
-        #     permissions = [{'p':'1'}]
-        # elif(grant==2):
-        #     permissions = [{'p':'1'},{'p':'2'},{'p':'3'}]
-        # elif(grant==3):
-        #     permissions = [{'p':'1'},{'p':'2'},{'p':'3'},{'p':'4'}]
-        # elif(grant==4):
-        #     permissions = [{'p':'1'},{'p':'2'},{'p':'3'},{'p':'4'},{'p':'5'}]
-        #print(permissions)
         return render_template('left.html', permissions=grant)
 
 
@@ -323,12 +313,15 @@ def post_list():
         user = session.get('username')
         # 获取用户的权限
         grant = User_info.query.join(User_id_name_pwd).filter_by(u_name=user).first().u_grant
+        uid = User_id_name_pwd.query.filter(User_id_name_pwd.u_name == user).first().u_id
 
         # 如果用户是版主，则获得板块的编号，否则就是-1
         fbid = -1  # 用户不是版主，编号是-1
         if grant == 3:  # 用户是版主
-            fbid = FB_info.query.filter(FB_info.fb_masterid == user).first()
-        return render_template('postlist.html', posts=posts, permissions=grant, fbid=fbid)
+            fbid = FB_info.query.filter(FB_info.fb_mastername == user).first().fb_id
+        # 如果用户发的帖子，则可以删除自己的帖子
+
+        return render_template('postlist.html', posts=posts, permissions=grant, fbid=fbid,uid = uid)
 
 @user_blueprint.route('/messagelist/', methods=['GET', 'POST'])
 @is_login
@@ -344,9 +337,26 @@ def message_list():
         
         for i in mids:
             messages.append(PUM_info.query.get(i.m_id))
-            
-        print(len(messages))
-        return render_template('messagelist.html', messages=messages)
+        # print(len(messages))
+
+        user = session.get('username')
+        # 获取用户的权限
+        grant = User_info.query.join(User_id_name_pwd).filter_by(u_name=user).first().u_grant
+        permissions = 0
+        # 如果是该帖子的楼主、该帖子所在的板块的版主、管理员
+        if grant == 4:#管理员
+            permissions = 1
+        elif grant == 3:#版主
+            fbid = Post_info.query.filter(Post_info.p_id == p_id).first().fb_id #帖子所在板块id
+            userfbid = FB_info.query.filter(FB_info.fb_mastername == user).first().fb_id#版主所管理的板块id
+            if fbid == userfbid:
+                permissions = 1
+        #普通用户
+        postuid = Post_info.query.filter(Post_info.p_id == p_id).first().u_id  # 帖子的楼主id
+        uid = User_id_name_pwd.query.filter(User_id_name_pwd.u_name==user).first().u_id
+        if postuid == uid:
+            permissions = 1
+        return render_template('messagelist.html', messages=messages,permissions=permissions)
 
 @user_blueprint.route('/userlist/', methods=['GET', 'POST'])
 @is_login
@@ -759,7 +769,17 @@ def personal_list():
         u_id = request.args.get('u_id')
         messages = PUM_info.query.filter(PUM_info.u_id == u_id).all()
         #print(messages)
-        return render_template('personallist.html', u_id=u_id, messages=messages)
+
+        user = session.get('username')
+        # 获取用户的权限
+        grant = User_info.query.join(User_id_name_pwd).filter_by(u_name=user).first().u_grant
+        permissions =0
+        if grant==4:#管理员
+            permissions =1
+        username = User_id_name_pwd.query.filter(User_id_name_pwd.u_id == u_id).first().u_name
+        if user == username:#是用户自己
+            permissions = 1
+        return render_template('personallist.html', u_id=u_id, messages=messages,permissions=permissions)
 
 @user_blueprint.route('/postsearchall/', methods=['GET', 'POST'])
 @is_login
@@ -774,13 +794,14 @@ def postsearchall():  # 按照标题搜索帖子
         user = session.get('username')
         # 获取用户的权限
         grant = User_info.query.join(User_id_name_pwd).filter_by(u_name=user).first().u_grant
+        uid = User_id_name_pwd.query.filter(User_id_name_pwd.u_name == user).first().u_id
 
         # 如果用户是版主，则获得板块的编号，否则就是-1
         fbid = -1  # 用户不是版主，编号是-1
         if grant == 3:  # 用户是版主
             fbid = FB_info.query.filter(FB_info.fb_mastername == user).first().fb_id
         # print('fffffffffffffffffff ' + str(fbid))
-        return render_template('postlist.html', posts=posts, permissions=grant, fbid=fbid)
+        return render_template('postlist.html', posts=posts, permissions=grant, fbid=fbid,uid=uid)
 
 
 @user_blueprint.route('/usersearchall/', methods=['GET', 'POST'])

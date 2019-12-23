@@ -43,7 +43,13 @@
                 <td>
                     {% if permissions == 4 %} {# 如果是管理员 #}
                         <a href="/user/delpost/?p_id={{post.p_id }}&fb_id={{fb_id}}">删除</a> |
-                    {% elif permissions == 3 and post.fb_id == fbid%} {# 如果是版主 #}
+                    {% elif permissions == 3%} {# 如果是版主 #}
+                        {% if post.fb_id == fbid %}{# 如果这个用户是这个板块的版主 #}
+                            <a href="/user/delpost/?p_id={{post.p_id }}&fb_id={{fb_id}}">删除</a> |
+                        {% elif post.u_id == uid%}{# 如果这个用户是这个帖子的楼主 #}
+                            <a href="/user/delpost/?p_id={{post.p_id }}&fb_id={{fb_id}}">删除</a> |
+                        {% endif %}
+                    {% elif permissions == 2 and post.u_id == uid%} {# 如果这个用户是这个帖子的楼主 #}
                         <a href="/user/delpost/?p_id={{post.p_id }}&fb_id={{fb_id}}">删除</a> |
                     {% endif%}
                     <a href="/user/messagelist/?p_id={{post.p_id}}&fb_id={{fb_id}}">查看</a> 
