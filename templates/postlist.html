@@ -36,10 +36,10 @@
             </tr>
             {% for post in posts %}
             <tr>
-                <td>{{post.p_id }}</td>
-                <td>{{post.p_title }}</td>
-                <td>{{post.p_ptime.strftime("%Y-%m-%d %H:%M")}}</td>
-                <td>{{post.user_id_name_pwd.u_name}}</td>
+                <td style="width:5%">{{post.p_id }}</td>
+                <td style="width:45%">{{post.p_title }}</td> {# 此宽度为最大宽度 #}
+                <td style="width:20%">{{post.p_ptime.strftime("%Y-%m-%d %H:%M")}}</td>
+                <td style="width:15%">{{post.user_id_name_pwd.u_name}}</td>
                 <td>
                     {% if permissions == 4 %} {# 如果是管理员 #}
                         <a href="/user/delpost/?p_id={{post.p_id }}&fb_id={{fb_id}}">删除</a> |
