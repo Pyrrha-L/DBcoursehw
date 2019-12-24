@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8237b4f0-7730-49da-b951-ab0cd5d41921" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App/user_views.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/user_views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/messagelist.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/messagelist.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/personallist.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/personallist.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/postlist.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/postlist.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/testdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/utils/testdb.db" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -55,9 +54,18 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1577066224919</updated>
-      <workItem from="1577066229713" duration="7298000" />
+      <workItem from="1577066229713" duration="10360000" />
+      <workItem from="1577156098602" duration="5630000" />
+      <workItem from="1577167966062" duration="3963000" />
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="debug加入按键权限(新增单个用户的留言表，帖子留言表，帖子表)">
+      <created>1577076571109</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1577076571109</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -78,6 +86,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="加入按键权限(普通用户没有修改等按键)" />
-    <option name="LAST_COMMIT_MESSAGE" value="加入按键权限(普通用户没有修改等按键)" />
+    <MESSAGE value="debug加入按键权限(新增单个用户的留言表，帖子留言表，帖子表)" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug加入按键权限(新增单个用户的留言表，帖子留言表，帖子表)" />
   </component>
 </project>

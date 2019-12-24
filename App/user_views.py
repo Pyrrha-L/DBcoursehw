@@ -44,7 +44,7 @@ def create_db():
     创建数据
     """
     print('begin create db')
-    
+
     db.create_all()
     
     def init_data():
@@ -300,6 +300,8 @@ def forumblock_list():
         # 返回获取到的版块信息给前端页面
         return render_template('fblist.html', fbs=fbs, paginate=paginate,permissions = grant)
 
+def taketime(post):
+    return post.p_restime
 @user_blueprint.route('/postlist/', methods=['GET', 'POST'])
 @is_login
 def post_list():
@@ -307,8 +309,9 @@ def post_list():
     显示帖子列表
     """
     if request.method == 'GET':
+
         fb_id = request.args.get('fb_id')
-        posts = Post_info.query.filter(Post_info.fb_id == fb_id).all()
+        posts = Post_info.query.join(Post_id_restime).filter(Post_info.fb_id == fb_id).order_by(Post_id_restime.p_restime.desc()).all()
 
         user = session.get('username')
         # 获取用户的权限
@@ -593,8 +596,9 @@ def del_message():
             fb_id=post.fb_id
         
         fb = FB_info.query.filter_by(fb_id=fb_id).first()
-        
-        if(user!=fb.fb_mastername and user!='admin' and user!=message.u_id):
+
+        uid = User_id_name_pwd.query.filter(User_id_name_pwd.u_name == user).first().u_id
+        if(user!=fb.fb_mastername and user!='admin' and uid!=message.u_id):
             return render_template('delmessagefa.html')
         
         db.session.delete(message)
@@ -789,7 +793,9 @@ def postsearchall():  # 按照标题搜索帖子
 
     if request.method == 'POST':
         keywords = request.form.get('keywords')
-        posts = Post_info.query.filter(Post_info.p_title.like('%' + keywords + '%')).all()
+        # posts = Post_info.query.filter(Post_info.p_title.like('%' + keywords + '%')).all()
+        posts = Post_info.query.join(Post_id_restime).filter(Post_info.p_title.like('%' + keywords + '%')).order_by(
+            Post_id_restime.p_restime.desc()).all()
 
         user = session.get('username')
         # 获取用户的权限
@@ -800,7 +806,6 @@ def postsearchall():  # 按照标题搜索帖子
         fbid = -1  # 用户不是版主，编号是-1
         if grant == 3:  # 用户是版主
             fbid = FB_info.query.filter(FB_info.fb_mastername == user).first().fb_id
-        # print('fffffffffffffffffff ' + str(fbid))
         return render_template('postlist.html', posts=posts, permissions=grant, fbid=fbid,uid=uid)
 
 

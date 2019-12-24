@@ -89,6 +89,7 @@ class Post_info(db.Model):
     p_message = db.relationship('PUM_pid_mid',backref= 'post_info', cascade="all, delete-orphan", lazy="joined")
     
     __tablename__ = 'post_info'
+    # __mapper_args__ = {"order_by":p_restime}
     
     def __init__(self,uid,fbid,title):  #补齐参数
         self.u_id=uid
