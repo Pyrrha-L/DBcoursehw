@@ -792,10 +792,18 @@ def postsearchall():  # 按照标题搜索帖子
         return render_template('searchpostbytitle.html')
 
     if request.method == 'POST':
+        # 获取用户选择的板块名称与用户输入的帖子标题
+        theme_name = request.values.get("theme_name")
         keywords = request.form.get('keywords')
         # posts = Post_info.query.filter(Post_info.p_title.like('%' + keywords + '%')).all()
-        posts = Post_info.query.join(Post_id_restime).filter(Post_info.p_title.like('%' + keywords + '%')).order_by(
-            Post_id_restime.p_restime.desc()).all()
+        # 进行板内搜索
+        if theme_name=="all":
+            posts = Post_info.query.join(Post_id_restime).filter(Post_info.p_title.like('%' + keywords + '%')).order_by(Post_id_restime.p_restime.desc()).all()
+        else:
+            fb = FB_info.query.filter(FB_info.fb_theme==theme_name).first()     # 查找当前板块名称对应的板块id
+            # print("fb_id:", fb.fb_id)
+            # 依照当前的板块id进行post查询
+            posts=Post_info.query.filter(Post_info.p_title.like('%' + keywords + '%'), Post_info.fb_id==fb.fb_id).order_by(Post_id_restime.p_restime.desc()).all()
 
         user = session.get('username')
         # 获取用户的权限
@@ -806,6 +814,7 @@ def postsearchall():  # 按照标题搜索帖子
         fbid = -1  # 用户不是版主，编号是-1
         if grant == 3:  # 用户是版主
             fbid = FB_info.query.filter(FB_info.fb_mastername == user).first().fb_id
+        print("信息:", grant, fbid, uid)
         return render_template('postlist.html', posts=posts, permissions=grant, fbid=fbid,uid=uid)
 
 
