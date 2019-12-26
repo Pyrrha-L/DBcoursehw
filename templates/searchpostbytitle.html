@@ -61,9 +61,22 @@
                     <tr>
                         <th width="100">搜索帖子</th>
                         <td>
-                            <div class="selectbox" style="width:380px;">
+                            <div class="selectbox" style="width:170px;">
                                 <input type="hidden" value="{{g_id}}" name="g_id">
                                 <input type="text" name="keywords" placeholder="请填入关键词" value="">
+                            </div>
+                        </td>
+                        <th width="70">&nbsp选择板块</th>
+                        <td>
+                            <div style="width:150px">
+                                <select class="form-control" name="theme_name" id="theme_name">
+                                    <option selected="selected">--请选择板块范围--</option>
+                                    <option value="all">所有板块</option>
+                                    <option value="Information">Information</option>
+                                    <option value="Exclude">Exclude</option>
+                                    <option value="Action">Action</option>
+                                    <option value="Dialogue">Dialogue</option>
+                                </select>
                             </div>
                         </td>
                         <td>
