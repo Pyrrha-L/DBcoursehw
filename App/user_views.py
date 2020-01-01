@@ -803,7 +803,7 @@ def postsearchall():  # 按照标题搜索帖子
             fb = FB_info.query.filter(FB_info.fb_theme==theme_name).first()     # 查找当前板块名称对应的板块id
             # print("fb_id:", fb.fb_id)
             # 依照当前的板块id进行post查询
-            posts=Post_info.query.filter(Post_info.p_title.like('%' + keywords + '%'), Post_info.fb_id==fb.fb_id).order_by(Post_id_restime.p_restime.desc()).all()
+            posts = Post_info.query.join(Post_id_restime).filter(Post_info.p_title.like('%' + keywords + '%'), Post_info.fb_id==fb.fb_id).order_by(Post_id_restime.p_restime.desc()).all()
 
         user = session.get('username')
         # 获取用户的权限
